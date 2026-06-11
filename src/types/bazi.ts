@@ -1,40 +1,44 @@
 // 四柱推命 型定義
 
-export type TenStem =
+/** 十干 */
+export type HeavenlyStem =
   | '甲' | '乙' | '丙' | '丁' | '戊'
   | '己' | '庚' | '辛' | '壬' | '癸'
 
-export type TwelveBranch =
+/** 十二支 */
+export type EarthlyBranch =
   | '子' | '丑' | '寅' | '卯' | '辰' | '巳'
   | '午' | '未' | '申' | '酉' | '戌' | '亥'
 
+/** 五行 */
 export type FiveElement = '木' | '火' | '土' | '金' | '水'
 
-export type YinYang = '陽' | '陰'
+/** 柱（天干＋地支） */
+export type BaziPillar = { stem: string; branch: string }
 
-export interface Pillar {
-  stem: TenStem
-  branch: TwelveBranch
-  stemElement: FiveElement
-  branchElement: FiveElement
-  yinYang: YinYang
+/** 命式の算出結果 */
+export type BaziResult = {
+  year: BaziPillar
+  month: BaziPillar
+  day: BaziPillar
+  hour: BaziPillar
+  /** 日主（日柱の天干）。体質判定の中心となる */
+  dayMaster: string
+  /** 蔵干（各柱の地支に内蔵される天干） */
+  hiddenStems: {
+    year: string[]
+    month: string[]
+    day: string[]
+    hour: string[]
+  }
 }
 
-export interface BaziChart {
-  year: Pillar
-  month: Pillar
-  day: Pillar
-  hour: Pillar
-  /** 五行ごとのスコア（0〜10） */
-  fiveElementScores: Record<FiveElement, number>
-}
-
-export interface BirthInfo {
-  year: number
-  month: number
-  day: number
-  hour: number   // 0〜23
-  minute: number
-  /** タイムゾーンオフセット（分）: JST = 540 */
-  tzOffsetMinutes: number
+/** calculateBazi の入力 */
+export type BaziInput = {
+  /** 生年月日 YYYY-MM-DD */
+  birthDate: string
+  /** 出生時刻 HH:mm（24時間表記） */
+  birthTime: string
+  /** IANAタイムゾーン 例: 'Asia/Tokyo' */
+  timezone: string
 }

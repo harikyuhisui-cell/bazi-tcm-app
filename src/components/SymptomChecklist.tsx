@@ -1,19 +1,23 @@
 'use client'
 
-import { SYMPTOM_ITEMS } from '@/lib/tcm/symptoms'
+import { visibleSymptomItems } from '@/lib/tcm/symptoms'
+import type { Gender } from '@/lib/tcm/gender'
 
 type Props = {
   /** チェック済みの症状ID */
   checkedIds: string[]
   onChange: (checkedIds: string[]) => void
+  /** 性別（男性は婦人科系の項目を非表示） */
+  gender: Gender
 }
 
 /**
  * 不調チェックリスト。
  * 鍼灸師監修済みの physicalTraits を項目として提示し、自覚症状を任意入力できる。
  */
-export function SymptomChecklist({ checkedIds, onChange }: Props) {
+export function SymptomChecklist({ checkedIds, onChange, gender }: Props) {
   const checked = new Set(checkedIds)
+  const items = visibleSymptomItems(gender)
 
   function toggle(id: string) {
     const next = new Set(checked)
@@ -32,14 +36,14 @@ export function SymptomChecklist({ checkedIds, onChange }: Props) {
           チェックした内容は、命式から推定した傾向に加味されます。
         </p>
         <span className="text-xs font-medium text-emerald-700">
-          {checked.size > 0 ? `${checked.size}件選択中` : `全${SYMPTOM_ITEMS.length}項目`}
+          {checked.size > 0 ? `${checked.size}件選択中` : `全${items.length}項目`}
         </span>
       </div>
 
       {/* スクロール領域: 下端のフェードと矢印で「続きがある」ことを示す */}
       <div className="relative">
         <div className="grid max-h-56 grid-cols-1 gap-1 overflow-y-auto pb-6 pr-1 sm:max-h-64 sm:grid-cols-2">
-          {SYMPTOM_ITEMS.map((item) => (
+          {items.map((item) => (
             <label key={item.id} className="flex items-start gap-2 text-sm">
               <input
                 type="checkbox"

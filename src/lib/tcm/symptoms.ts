@@ -1,4 +1,5 @@
 import { ALL_CONSTITUTIONS } from '@/data/constitutions'
+import { filterByGender, type Gender } from './gender'
 
 /** 不調チェック項目（鍼灸師監修済みの physicalTraits を元データとする） */
 export type SymptomItem = {
@@ -21,6 +22,17 @@ export const SYMPTOM_ITEMS: readonly SymptomItem[] = ALL_CONSTITUTIONS.flatMap((
     constitutionId: c.id,
   }))
 )
+
+/** 性別に応じて表示する症状項目（男性は婦人科系を除外） */
+export function visibleSymptomItems(gender: Gender): SymptomItem[] {
+  return filterByGender(SYMPTOM_ITEMS, gender, (s) => s.label)
+}
+
+/** 性別に応じて、選択済みの症状IDから非表示になる項目を取り除く */
+export function pruneSymptomIdsByGender(checkedIds: readonly string[], gender: Gender): string[] {
+  const visible = new Set(visibleSymptomItems(gender).map((s) => s.id))
+  return checkedIds.filter((id) => visible.has(id))
+}
 
 /** チェックされた症状IDから、体質タイプごとの該当数を集計する */
 export function countSymptomsByConstitution(checkedIds: readonly string[]): Map<string, number> {

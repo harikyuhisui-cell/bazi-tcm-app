@@ -6,6 +6,7 @@ import { analyzeWuxing } from '@/lib/wuxing/analyzer'
 import { buildDiagnosis } from '@/lib/tcm/matcher'
 import type { DiagnosisResult } from '@/types/tcm'
 import { BirthInputForm, type BirthInputValues } from '@/components/BirthInputForm'
+import type { Gender } from '@/lib/tcm/gender'
 import { BaziPillarsSection } from '@/components/BaziPillarsSection'
 import { WuxingAnalysisSection } from '@/components/WuxingAnalysisSection'
 import { OrganProfileSection } from '@/components/OrganProfileSection'
@@ -16,6 +17,7 @@ import { Disclaimer } from '@/components/Disclaimer'
 
 export default function Home() {
   const [result, setResult] = useState<DiagnosisResult | null>(null)
+  const [profile, setProfile] = useState<{ name: string; gender: Gender } | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   function handleSubmit(values: BirthInputValues) {
@@ -27,6 +29,7 @@ export default function Home() {
       })
       const wuxing = analyzeWuxing(bazi)
       setResult(buildDiagnosis(bazi, wuxing, values.symptomIds))
+      setProfile({ name: values.name, gender: values.gender })
       setError(null)
     } catch {
       setError('入力内容を確認してください（例: 1990-05-15 / 10:30）')
@@ -50,8 +53,11 @@ export default function Home() {
         )}
       </div>
 
-      {result && (
+      {result && profile && (
         <div className="mt-10 flex flex-col gap-10">
+          {profile.name && (
+            <p className="text-lg font-bold text-gray-700">{profile.name} さんの鑑定結果</p>
+          )}
           <BaziPillarsSection bazi={result.bazi} />
 
           <WuxingAnalysisSection analysis={result.wuxing} sectionIndex={1} />
@@ -79,12 +85,14 @@ export default function Home() {
             <ConstitutionCard
               constitution={result.primaryConstitution}
               reasons={result.matches[0].reasons}
+              gender={profile.gender}
               isPrimary
             />
             {result.secondaryConstitution && result.matches[1] && (
               <ConstitutionCard
                 constitution={result.secondaryConstitution}
                 reasons={result.matches[1].reasons}
+                gender={profile.gender}
               />
             )}
           </section>

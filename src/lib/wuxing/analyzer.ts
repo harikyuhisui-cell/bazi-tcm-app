@@ -89,13 +89,26 @@ function calculateScores(bazi: BaziResult): Record<Element, number> {
  * 支持率 = (日主の五行 + 日主を生じる五行) / 全体スコア
  */
 function judgeStrength(scores: Record<Element, number>, dayMaster: Element): BodyStrength {
-  const total = ELEMENTS.reduce((sum, el) => sum + scores[el], 0)
-  const support = scores[dayMaster] + scores[generatedBy(dayMaster)]
-  const ratio = support / total
-
+  const ratio = supportRatio(scores, dayMaster)
   if (ratio >= STRENGTH_THRESHOLDS.strong) return '身強'
   if (ratio <= STRENGTH_THRESHOLDS.weak) return '身弱'
   return '中和'
+}
+
+/** 日主を支える力の比率 = (日主の五行 + 日主を生じる五行) / 全体スコア */
+function supportRatio(scores: Record<Element, number>, dayMaster: Element): number {
+  const total = ELEMENTS.reduce((sum, el) => sum + scores[el], 0)
+  if (total === 0) return 0
+  return (scores[dayMaster] + scores[generatedBy(dayMaster)]) / total
+}
+
+/**
+ * 日主グループ比率（日主を支える力の比率）を 0〜100 の整数%で返す。
+ * 表示用。判定の境界値は STRENGTH_THRESHOLDS と一致する。
+ * @param analysis analyzeWuxing の出力
+ */
+export function dayMasterSupportPercent(analysis: WuxingAnalysis): number {
+  return Math.round(supportRatio(analysis.scores, analysis.dayMasterElement) * 100)
 }
 
 /**

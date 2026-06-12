@@ -6,7 +6,9 @@ import { analyzeWuxing } from '@/lib/wuxing/analyzer'
 import { buildDiagnosis } from '@/lib/tcm/matcher'
 import type { DiagnosisResult } from '@/types/tcm'
 import { BirthInputForm, type BirthInputValues } from '@/components/BirthInputForm'
-import { WuxingRadarChart } from '@/components/WuxingRadarChart'
+import { WuxingAnalysisSection } from '@/components/WuxingAnalysisSection'
+import { PersonalityCard } from '@/components/PersonalityCard'
+import { SectionHeading, KANJI_NUMERALS } from '@/components/SectionHeading'
 import { ConstitutionCard } from '@/components/ConstitutionCard'
 import { Disclaimer } from '@/components/Disclaimer'
 
@@ -22,7 +24,7 @@ export default function Home() {
         timezone: 'Asia/Tokyo',
       })
       const wuxing = analyzeWuxing(bazi)
-      setResult(buildDiagnosis(bazi, wuxing))
+      setResult(buildDiagnosis(bazi, wuxing, values.symptomIds))
       setError(null)
     } catch {
       setError('入力内容を確認してください（例: 1990-05-15 / 10:30）')
@@ -31,8 +33,8 @@ export default function Home() {
   }
 
   return (
-    <main className="mx-auto max-w-2xl px-4 py-10">
-      <h1 className="text-2xl font-bold">八字体質ナビ</h1>
+    <main className="mx-auto max-w-4xl px-4 py-10">
+      <h1 className="text-2xl font-bold">陰陽五行体質チェック</h1>
       <p className="mt-2 text-sm text-gray-600">
         生年月日時から四柱推命の命式を算出し、東洋医学の観点から体質の傾向と養生のヒントをご提案します。
       </p>
@@ -47,10 +49,16 @@ export default function Home() {
       </div>
 
       {result && (
-        <div className="mt-10 flex flex-col gap-6">
-          <section>
-            <h2 className="text-lg font-bold">あなたの命式</h2>
-            <table className="mt-2 w-full border-collapse text-center">
+        <div className="mt-10 flex flex-col gap-10">
+          <section className="flex flex-col gap-5">
+            <SectionHeading
+              numberKanji={KANJI_NUMERALS[0]}
+              title="あなたの命式"
+              subtitle="生年月日時から導いた四柱と日主"
+            />
+            <div className="rounded-2xl border border-[#ece6d8] bg-white p-6 shadow-sm">
+            <div className="overflow-x-auto">
+            <table className="w-full min-w-[20rem] border-collapse text-center">
               <thead>
                 <tr className="bg-gray-100 text-sm">
                   <th className="border p-2">年柱</th>
@@ -80,20 +88,34 @@ export default function Home() {
                 </tr>
               </tbody>
             </table>
-            <p className="mt-2 text-sm text-gray-600">
+            </div>
+            <p className="mt-3 text-sm text-gray-600">
               日主: {result.bazi.dayMaster}（{result.wuxing.dayMasterElement}） / 傾向:{' '}
               {result.wuxing.strength}
             </p>
+            </div>
           </section>
 
-          <section>
-            <h2 className="text-lg font-bold">五行バランス</h2>
-            <WuxingRadarChart scores={result.wuxing.scores} />
-            <p className="text-sm leading-relaxed text-gray-700">{result.wuxing.explanation}</p>
+          <section className="flex flex-col gap-5">
+            <SectionHeading
+              numberKanji={KANJI_NUMERALS[1]}
+              title="性格の傾向"
+              subtitle="日主の五行から見た気質の傾向"
+            />
+            <PersonalityCard
+              dayMaster={result.bazi.dayMaster}
+              dayMasterElement={result.wuxing.dayMasterElement}
+            />
           </section>
 
-          <section className="flex flex-col gap-4">
-            <h2 className="text-lg font-bold">体質タイプの傾向</h2>
+          <WuxingAnalysisSection analysis={result.wuxing} sectionIndex={2} />
+
+          <section className="flex flex-col gap-5">
+            <SectionHeading
+              numberKanji={KANJI_NUMERALS[3]}
+              title="体質タイプの傾向"
+              subtitle="五行バランスと自覚症状から推定される体質"
+            />
             <ConstitutionCard
               constitution={result.primaryConstitution}
               reasons={result.matches[0].reasons}

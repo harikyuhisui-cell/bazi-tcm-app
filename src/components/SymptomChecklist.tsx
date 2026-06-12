@@ -1,0 +1,60 @@
+'use client'
+
+import { SYMPTOM_ITEMS } from '@/lib/tcm/symptoms'
+
+type Props = {
+  /** チェック済みの症状ID */
+  checkedIds: string[]
+  onChange: (checkedIds: string[]) => void
+}
+
+/**
+ * 不調チェックリスト。
+ * 鍼灸師監修済みの physicalTraits を項目として提示し、自覚症状を任意入力できる。
+ */
+export function SymptomChecklist({ checkedIds, onChange }: Props) {
+  const checked = new Set(checkedIds)
+
+  function toggle(id: string) {
+    const next = new Set(checked)
+    if (next.has(id)) next.delete(id)
+    else next.add(id)
+    onChange(Array.from(next))
+  }
+
+  return (
+    <fieldset className="rounded-md border border-gray-300 p-4">
+      <legend className="px-1 text-sm font-medium">
+        気になる不調（任意・当てはまるものにチェック）
+      </legend>
+      <div className="mb-2 flex flex-wrap items-center justify-between gap-1">
+        <p className="text-xs text-gray-500">
+          チェックした内容は、命式から推定した傾向に加味されます。
+        </p>
+        <span className="text-xs font-medium text-emerald-700">
+          {checked.size > 0 ? `${checked.size}件選択中` : `全${SYMPTOM_ITEMS.length}項目`}
+        </span>
+      </div>
+
+      {/* スクロール領域: 下端のフェードと矢印で「続きがある」ことを示す */}
+      <div className="relative">
+        <div className="grid max-h-56 grid-cols-1 gap-1 overflow-y-auto pb-6 pr-1 sm:max-h-64 sm:grid-cols-2">
+          {SYMPTOM_ITEMS.map((item) => (
+            <label key={item.id} className="flex items-start gap-2 text-sm">
+              <input
+                type="checkbox"
+                checked={checked.has(item.id)}
+                onChange={() => toggle(item.id)}
+                className="mt-1 h-4 w-4 shrink-0"
+              />
+              <span>{item.label}</span>
+            </label>
+          ))}
+        </div>
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 flex h-8 items-end justify-center bg-gradient-to-t from-white to-transparent">
+          <span className="text-xs text-gray-500">▼ スクロールで続きを表示</span>
+        </div>
+      </div>
+    </fieldset>
+  )
+}

@@ -1,10 +1,12 @@
 'use client'
 
 import { useState, type FormEvent } from 'react'
+import { SymptomChecklist } from './SymptomChecklist'
 
 export type BirthInputValues = {
   birthDate: string
   birthTime: string
+  symptomIds: string[]
 }
 
 type Props = {
@@ -15,6 +17,7 @@ type Props = {
 export function BirthInputForm({ onSubmit }: Props) {
   const [birthDate, setBirthDate] = useState('')
   const [birthTime, setBirthTime] = useState('12:00')
+  const [symptomIds, setSymptomIds] = useState<string[]>([])
   const [error, setError] = useState<string | null>(null)
 
   function handleSubmit(e: FormEvent) {
@@ -24,7 +27,7 @@ export function BirthInputForm({ onSubmit }: Props) {
       return
     }
     setError(null)
-    onSubmit({ birthDate, birthTime })
+    onSubmit({ birthDate, birthTime, symptomIds })
   }
 
   return (
@@ -54,6 +57,7 @@ export function BirthInputForm({ onSubmit }: Props) {
           className="rounded-md border border-gray-300 px-3 py-2"
         />
       </div>
+      <SymptomChecklist checkedIds={symptomIds} onChange={setSymptomIds} />
       {error && (
         <p role="alert" className="text-sm text-red-600">
           {error}

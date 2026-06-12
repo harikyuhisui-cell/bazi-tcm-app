@@ -20,7 +20,11 @@ describe('BirthInputForm', () => {
     fireEvent.change(screen.getByLabelText(/出生時刻/), { target: { value: '10:30' } })
     fireEvent.click(screen.getByRole('button', { name: '体質傾向をみる' }))
 
-    expect(onSubmit).toHaveBeenCalledWith({ birthDate: '1990-05-15', birthTime: '10:30' })
+    expect(onSubmit).toHaveBeenCalledWith({
+      birthDate: '1990-05-15',
+      birthTime: '10:30',
+      symptomIds: [],
+    })
   })
 })
 

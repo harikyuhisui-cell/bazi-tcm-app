@@ -28,7 +28,7 @@ export default function Home() {
         timezone: 'Asia/Tokyo',
       })
       const wuxing = analyzeWuxing(bazi)
-      setResult(buildDiagnosis(bazi, wuxing, values.symptomIds))
+      setResult(buildDiagnosis(bazi, wuxing, values.symptomIds, values.familyIds))
       setProfile({ name: values.name, gender: values.gender })
       setError(null)
     } catch {

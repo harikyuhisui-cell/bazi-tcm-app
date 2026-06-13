@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent, type ReactNode } from 'react'
 import { SymptomChecklist } from './SymptomChecklist'
+import { FamilyHistoryChecklist } from './FamilyHistoryChecklist'
 import { pruneSymptomIdsByGender } from '@/lib/tcm/symptoms'
 import type { Gender } from '@/lib/tcm/gender'
 
@@ -13,6 +14,7 @@ export type BirthInputValues = {
   timeUnknown: boolean
   gender: Gender
   symptomIds: string[]
+  familyIds: string[]
 }
 
 type Props = {
@@ -71,6 +73,7 @@ export function BirthInputForm({ onSubmit }: Props) {
   const [minute, setMinute] = useState<number | null>(null)
   const [gender, setGender] = useState<Gender>('female')
   const [symptomIds, setSymptomIds] = useState<string[]>([])
+  const [familyIds, setFamilyIds] = useState<string[]>([])
 
   const maxDay = daysInMonth(year, month)
   const days = Array.from({ length: maxDay }, (_, i) => i + 1)
@@ -88,6 +91,7 @@ export function BirthInputForm({ onSubmit }: Props) {
       timeUnknown,
       gender,
       symptomIds: pruneSymptomIdsByGender(symptomIds, gender),
+      familyIds,
     })
   }
 
@@ -198,6 +202,8 @@ export function BirthInputForm({ onSubmit }: Props) {
       </div>
 
       <SymptomChecklist checkedIds={symptomIds} onChange={setSymptomIds} gender={gender} />
+
+      <FamilyHistoryChecklist checkedIds={familyIds} onChange={setFamilyIds} />
 
       <button
         type="submit"

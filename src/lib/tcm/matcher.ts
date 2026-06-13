@@ -5,25 +5,31 @@ import { ELEMENT_TO_ORGAN } from '@/lib/wuxing/rules'
 import { getConstitutionById } from '@/data/constitutions'
 import { MAPPING_RULES, FALLBACK_BY_WEAKEST_ELEMENT } from './mappingRules'
 import { countSymptomsByConstitution } from './symptoms'
+import { countFamilyByConstitution } from './familyHistory'
 
 /** チェックされた不調1件あたりの加点 */
 const SYMPTOM_POINT = 1
+/** 家族歴1件あたりの加点（素因のため自覚症状より軽め） */
+const FAMILY_POINT = 0.5
 
 /**
  * 五行バランス分析から体質タイプの傾向を推定する。
  *
  * 各マッピングルールを評価し、該当したルールのポイントを体質タイプごとに合算。
- * 不調チェック（任意）が渡された場合は、該当する体質タイプに自覚症状を加点する。
+ * 不調チェック・家族歴チェック（いずれも任意）が渡された場合は、該当する体質
+ * タイプに加点する。家族歴は素因として自覚症状より軽い重みで加味する。
  * スコア上位（最大2件）を候補として返す。どのルールにも該当しない場合は、
  * 最弱の五行に対応する体質タイプをフォールバックとして返す。
  *
  * @param analysis Phase 2 の analyzeWuxing の出力
  * @param checkedSymptomIds ユーザーがチェックした不調項目のID（任意）
+ * @param checkedFamilyIds ユーザーがチェックした家族歴項目のID（任意）
  * @returns スコア降順の体質タイプ候補（1〜2件、根拠つき）
  */
 export function matchConstitutions(
   analysis: WuxingAnalysis,
-  checkedSymptomIds: readonly string[] = []
+  checkedSymptomIds: readonly string[] = [],
+  checkedFamilyIds: readonly string[] = []
 ): ConstitutionMatch[] {
   const byId = new Map<string, ConstitutionMatch>()
 
@@ -45,6 +51,13 @@ export function matchConstitutions(
     const entry = getEntry(constitutionId)
     entry.score += count * SYMPTOM_POINT
     entry.reasons.push(`気になる不調として${count}件の項目が当てはまっています`)
+  })
+
+  // 家族歴（遺伝性体質傾向）の加点（素因として参考程度に加味する）
+  Array.from(countFamilyByConstitution(checkedFamilyIds)).forEach(([constitutionId, count]) => {
+    const entry = getEntry(constitutionId)
+    entry.score += count * FAMILY_POINT
+    entry.reasons.push(`ご家族の体質傾向（${count}件）からも関連が見られます（参考）`)
   })
 
   let matches = Array.from(byId.values()).sort((a, b) => b.score - a.score)
@@ -73,9 +86,10 @@ export function matchConstitutions(
 export function buildDiagnosis(
   bazi: BaziResult,
   wuxing: WuxingAnalysis,
-  checkedSymptomIds: readonly string[] = []
+  checkedSymptomIds: readonly string[] = [],
+  checkedFamilyIds: readonly string[] = []
 ): DiagnosisResult {
-  const matches = matchConstitutions(wuxing, checkedSymptomIds)
+  const matches = matchConstitutions(wuxing, checkedSymptomIds, checkedFamilyIds)
 
   const primary = getConstitutionById(matches[0].constitutionId)
   if (!primary) {

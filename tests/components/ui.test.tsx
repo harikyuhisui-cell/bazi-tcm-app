@@ -28,6 +28,7 @@ describe('BirthInputForm', () => {
       timeUnknown: true,
       gender: 'female',
       symptomIds: [],
+      familyIds: [],
     })
   })
 

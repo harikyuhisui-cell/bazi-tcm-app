@@ -48,11 +48,12 @@ src/
   lib/          # ビジネスロジック（命式算出、体質診断）
     bazi/       # 四柱推命算出エンジン
     wuxing/     # 五行バランス分析
-    tcm/        # 東洋医学体質分析ロジック
-    ai/         # Claude API連携
+    tcm/        # 東洋医学体質分析ロジック（マッチング・チェックリスト）
+    ai/         # Claude API連携（Phase 5以降で実装予定・現在は空）
   data/
     constitutions/  # 体質タイプ知識ベース（8タイプ・鍼灸師監修対象）
   types/        # TypeScript型定義
+scripts/        # CLI動作確認スクリプト（demo-bazi / demo-wuxing / demo-diagnosis）
 tests/          # Jestテストスイート
 docs/           # 仕様書・設計ドキュメント
 ```

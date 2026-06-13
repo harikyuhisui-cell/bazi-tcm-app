@@ -75,7 +75,7 @@ export function matchConstitutions(
     ]
   }
 
-  return matches.slice(0, 2)
+  return matches.slice(0, 4)
 }
 
 /**
@@ -91,18 +91,21 @@ export function buildDiagnosis(
 ): DiagnosisResult {
   const matches = matchConstitutions(wuxing, checkedSymptomIds, checkedFamilyIds)
 
-  const primary = getConstitutionById(matches[0].constitutionId)
-  if (!primary) {
-    throw new Error(`未登録の体質タイプ id: ${matches[0].constitutionId}`)
-  }
-  const secondary = matches[1] ? getConstitutionById(matches[1].constitutionId) : undefined
+  const constitutions = matches.map((m) => {
+    const constitution = getConstitutionById(m.constitutionId)
+    if (!constitution) {
+      throw new Error(`未登録の体質タイプ id: ${m.constitutionId}`)
+    }
+    return { constitution, reasons: m.reasons }
+  })
 
   return {
     bazi,
     wuxing,
     matches,
-    primaryConstitution: primary,
-    secondaryConstitution: secondary,
+    constitutions,
+    primaryConstitution: constitutions[0].constitution,
+    secondaryConstitution: constitutions[1]?.constitution,
   }
 }
 

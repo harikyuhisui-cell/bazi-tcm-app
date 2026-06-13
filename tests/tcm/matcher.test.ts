@@ -69,15 +69,15 @@ describe('matchConstitutions', () => {
     expect(matches[0].reasons[0]).toContain('偏りは大きくありません')
   })
 
-  test('候補は最大2件・スコア降順で返る', () => {
+  test('候補は最大4件・スコア降順で返る', () => {
     const analysis = makeAnalysis({
       strength: '身弱',
       scores: { 木: 0.5, 火: 0.5, 土: 5, 金: 3, 水: 0.5 },
     })
     const matches = matchConstitutions(analysis)
-    expect(matches.length).toBeLessThanOrEqual(2)
-    if (matches.length === 2) {
-      expect(matches[0].score).toBeGreaterThanOrEqual(matches[1].score)
+    expect(matches.length).toBeLessThanOrEqual(4)
+    for (let i = 1; i < matches.length; i++) {
+      expect(matches[i - 1].score).toBeGreaterThanOrEqual(matches[i].score)
     }
   })
 

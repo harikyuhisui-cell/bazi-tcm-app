@@ -13,12 +13,21 @@ export type ConstitutionMatch = {
   reasons: string[]
 }
 
+/** 体質タイプと判定根拠を解決した1件分 */
+export type ResolvedConstitution = {
+  constitution: ConstitutionType
+  /** 判定根拠（表示用・非断定表現） */
+  reasons: string[]
+}
+
 /** 傾向分析の最終結果（命式→五行→体質タイプ） */
 export type DiagnosisResult = {
   bazi: BaziResult
   wuxing: WuxingAnalysis
-  /** スコア順の体質タイプ候補（最大2件） */
+  /** スコア順の体質タイプ候補（最大4件） */
   matches: ConstitutionMatch[]
+  /** スコア順に解決した体質タイプ詳細（最大4件） */
+  constitutions: ResolvedConstitution[]
   /** 第一候補の体質タイプ詳細 */
   primaryConstitution: ConstitutionType
   /** 第二候補（存在する場合） */

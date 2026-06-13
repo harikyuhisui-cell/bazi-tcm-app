@@ -80,21 +80,18 @@ export default function Home() {
             <SectionHeading
               numberKanji={KANJI_NUMERALS[4]}
               title="体質タイプの傾向"
-              subtitle="五行バランスと自覚症状から推定される体質"
+              subtitle="五行バランス・自覚症状・家族歴から推定される体質（最大4タイプ）"
             />
-            <ConstitutionCard
-              constitution={result.primaryConstitution}
-              reasons={result.matches[0].reasons}
-              gender={profile.gender}
-              isPrimary
-            />
-            {result.secondaryConstitution && result.matches[1] && (
+            {result.constitutions.map((rc, i) => (
               <ConstitutionCard
-                constitution={result.secondaryConstitution}
-                reasons={result.matches[1].reasons}
+                key={rc.constitution.id}
+                constitution={rc.constitution}
+                reasons={rc.reasons}
+                rank={i + 1}
                 gender={profile.gender}
+                defaultOpen={i === 0}
               />
-            )}
+            ))}
           </section>
 
           <Disclaimer />

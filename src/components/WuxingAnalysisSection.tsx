@@ -3,6 +3,7 @@ import { SectionHeading, KANJI_NUMERALS } from './SectionHeading'
 import { WuxingRadarChart } from './WuxingRadarChart'
 import { WuxingScoreDetail } from './WuxingScoreDetail'
 import { DayMasterStrengthBar } from './DayMasterStrengthBar'
+import { WuxingCycleDiagram } from './WuxingCycleDiagram'
 
 type Props = {
   analysis: WuxingAnalysis
@@ -33,6 +34,10 @@ export function WuxingAnalysisSection({ analysis, sectionIndex = 1 }: Props) {
           <h3 className="mb-4 text-base font-bold text-gray-700">五行スコア詳細</h3>
           <WuxingScoreDetail analysis={analysis} />
         </div>
+      </div>
+
+      <div className="mx-auto w-full max-w-md">
+        <WuxingCycleDiagram />
       </div>
 
       <DayMasterStrengthBar analysis={analysis} />

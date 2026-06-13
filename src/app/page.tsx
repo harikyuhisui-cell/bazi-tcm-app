@@ -10,7 +10,6 @@ import type { Gender } from '@/lib/tcm/gender'
 import { BaziPillarsSection } from '@/components/BaziPillarsSection'
 import { WuxingAnalysisSection } from '@/components/WuxingAnalysisSection'
 import { OrganProfileSection } from '@/components/OrganProfileSection'
-import { WuxingCycleDiagram } from '@/components/WuxingCycleDiagram'
 import { PersonalityCard } from '@/components/PersonalityCard'
 import { SectionHeading, KANJI_NUMERALS } from '@/components/SectionHeading'
 import { ConstitutionCard } from '@/components/ConstitutionCard'
@@ -63,10 +62,7 @@ export default function Home() {
 
           <WuxingAnalysisSection analysis={result.wuxing} sectionIndex={1} />
 
-          <div className="flex flex-col gap-5">
-            <OrganProfileSection analysis={result.wuxing} sectionIndex={2} />
-            <WuxingCycleDiagram />
-          </div>
+          <OrganProfileSection analysis={result.wuxing} sectionIndex={2} />
 
           <section className="flex flex-col gap-5">
             <SectionHeading

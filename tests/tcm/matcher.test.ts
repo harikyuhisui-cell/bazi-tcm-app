@@ -42,6 +42,16 @@ describe('matchConstitutions', () => {
     expect(matches.map((m) => m.constitutionId)).toContain('kidney-yang-deficiency')
   })
 
+  test('身強なら木・火が不足でも気血両虚は候補にしない', () => {
+    // 木・火が不足だが身強のケース（金が突出）
+    const analysis = makeAnalysis({
+      strength: '身強',
+      scores: { 木: 0.5, 火: 0.5, 土: 2, 金: 6, 水: 2 },
+    })
+    const matches = matchConstitutions(analysis)
+    expect(matches.map((m) => m.constitutionId)).not.toContain('qi-blood-deficiency')
+  })
+
   test('身弱なら気血両虚が候補になる', () => {
     const analysis = makeAnalysis({
       strength: '身弱',

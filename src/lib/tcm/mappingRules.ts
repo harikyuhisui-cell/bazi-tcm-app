@@ -131,7 +131,8 @@ export const MAPPING_RULES: readonly MappingRule[] = [
   {
     constitutionId: 'qi-blood-deficiency',
     points: 1,
-    matches: (a) => isDeficient(a, '木') || isDeficient(a, '火'),
+    // 身強（日主が充実）の場合は気血の不足傾向とはみなさない
+    matches: (a) => a.strength !== '身強' && (isDeficient(a, '木') || isDeficient(a, '火')),
     reason: '気血の巡りに関わる木・火の気に不足が見られます',
   },
   // 痰湿瘀血: 土の過剰（湿の停滞）＋巡りの滞り

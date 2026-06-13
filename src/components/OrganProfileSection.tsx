@@ -6,6 +6,7 @@ import {
   organStatusOf,
   type OrganStatus,
 } from '@/lib/wuxing/elementStyle'
+import { ORGAN_MECHANISM } from '@/lib/wuxing/organMechanism'
 import { SectionHeading, KANJI_NUMERALS } from './SectionHeading'
 
 type Props = {
@@ -44,15 +45,33 @@ const STATUS_NOTE: Record<OrganStatus, string> = {
   deficient: 'bg-blue-50 text-blue-800',
 }
 
-/** 状態に応じた説明文を組み立てる（非断定・参考表現） */
-function describe(status: OrganStatus, c: (typeof ELEMENT_CORRESPONDENCE)[Element]): string {
+/**
+ * 状態に応じた説明文を組み立てる（非断定・参考表現）。
+ * 過剰・虚弱は監修資料『日柱の増減による不調』の相剋メカニズムに基づく。
+ */
+function describe(status: OrganStatus, element: Element): string {
+  const c = ELEMENT_CORRESPONDENCE[element]
+  const m = ORGAN_MECHANISM[element]
+
   if (status === 'excess') {
-    return `${c.organ}の気が亢進しやすい傾向があります。「${c.emotion}」の感情に影響を受けやすく、${c.body}に症状が現れやすい傾向があるとされます。`
+    const targetOrgan = ELEMENT_CORRESPONDENCE[m.excess.target].organ
+    return (
+      `${c.organ}（${m.governs}）の気が強すぎる傾向があります。` +
+      `働きすぎによる${m.excess.self}が起きやすく、` +
+      `有り余った勢いが「${m.excess.law}」の働きで${targetOrgan}に波及し、` +
+      `${m.excess.targetEffect}を併発しやすいとされます。`
+    )
   }
   if (status === 'deficient') {
-    return `${c.organ}の気が虚弱になりやすい傾向があります。${c.body}のケアと適切な養生を心がけることが参考になります。`
+    const sourceOrgan = ELEMENT_CORRESPONDENCE[m.deficient.source].organ
+    return (
+      `${c.organ}（${m.governs}）の気が不足しやすい傾向があります。` +
+      `${m.deficient.self}といった虚弱として現れやすく、` +
+      `防御力が弱いため「${m.deficient.law}」の働きで${sourceOrgan}から、` +
+      `${m.deficient.sourceEffect}とされます。`
+    )
   }
-  return `${c.organ}のバランスが比較的整っている傾向があります。現状の養生を継続することが大切です。`
+  return `${c.organ}（${m.governs}）のバランスが比較的整っている傾向があります。現状の養生を継続することが大切です。`
 }
 
 /** スコアのドーナツリング（SVG） */
@@ -175,7 +194,7 @@ export function OrganProfileSection({ analysis, sectionIndex = 2 }: Props) {
               </dl>
 
               <p className={`mt-4 rounded-lg p-3 text-sm leading-relaxed ${STATUS_NOTE[status]}`}>
-                {describe(status, c)}
+                {describe(status, el)}
               </p>
             </div>
           )

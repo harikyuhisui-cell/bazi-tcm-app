@@ -14,7 +14,7 @@ import { PersonalityCard } from '@/components/PersonalityCard'
 import { SectionHeading, KANJI_NUMERALS } from '@/components/SectionHeading'
 import { ConstitutionCard } from '@/components/ConstitutionCard'
 import { Disclaimer } from '@/components/Disclaimer'
-import { TitleLeafDecoration } from '@/components/TitleLeafDecoration'
+import { TitleSakuraDecoration } from '@/components/TitleSakuraDecoration'
 
 export default function Home() {
   const [result, setResult] = useState<DiagnosisResult | null>(null)
@@ -47,7 +47,7 @@ export default function Home() {
   return (
     <main className="mx-auto max-w-4xl px-4 py-10">
       <section className="relative overflow-hidden rounded-[2rem] border border-[#eadfcd] bg-[#fffaf3]/80 px-5 py-10 shadow-sm sm:px-8 sm:py-12">
-        <TitleLeafDecoration />
+        <TitleSakuraDecoration />
         <div className="relative z-10">
           <h1 className="text-center text-3xl font-bold tracking-wide text-[#4a332d] sm:text-4xl">
             体質バランスチェック

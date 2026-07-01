@@ -56,7 +56,7 @@ function PillarCard({
   return (
     <div
       className={`flex flex-col rounded-2xl border p-4 shadow-sm ${
-        isDayMaster ? 'border-[#d8b65a] bg-[#fdf6e3]' : 'border-[#ece6d8] bg-white'
+        isDayMaster ? 'border-[#efb7c4] bg-[#fff3f6]' : 'border-[#ece6d8] bg-white'
       }`}
     >
       <div className="flex items-center justify-between">
@@ -125,16 +125,18 @@ export function BaziPillarsSection({ bazi }: { bazi: BaziResult }) {
         title="命式（四柱）"
         subtitle="あなたの生年月日・時刻から算出した干支の組み合わせ"
       />
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        {PILLARS.map((meta) => (
-          <PillarCard
-            key={meta.key}
-            meta={meta}
-            pillar={bazi[meta.key]}
-            hiddenStems={bazi.hiddenStems[meta.key]}
-            isDayMaster={meta.key === 'day'}
-          />
-        ))}
+      <div className="overflow-x-auto pb-1">
+        <div className="grid min-w-[42rem] grid-cols-4 gap-3 lg:min-w-0">
+          {PILLARS.map((meta) => (
+            <PillarCard
+              key={meta.key}
+              meta={meta}
+              pillar={bazi[meta.key]}
+              hiddenStems={bazi.hiddenStems[meta.key]}
+              isDayMaster={meta.key === 'day'}
+            />
+          ))}
+        </div>
       </div>
       <p className="text-center text-sm text-gray-500">
         ☀️ 日柱の天干が「日干（命主）」＝あなたの命式の主人公となる干

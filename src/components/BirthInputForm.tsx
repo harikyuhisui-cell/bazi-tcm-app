@@ -217,7 +217,7 @@ export function BirthInputForm({ onSubmit }: Props) {
 
       <button
         type="submit"
-        className="rounded-md bg-[#efb7c4] px-4 py-3 text-lg font-medium text-white shadow-sm hover:bg-[#eaa8b8]"
+        className="rounded-md bg-[#efb7c4] px-4 py-3 text-lg font-medium text-[#4a332d] shadow-sm hover:bg-[#eaa8b8]"
       >
         体質チェックする
       </button>

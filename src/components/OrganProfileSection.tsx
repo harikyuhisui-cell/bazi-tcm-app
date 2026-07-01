@@ -121,18 +121,21 @@ export function OrganProfileSection({ analysis, sectionIndex = 2 }: Props) {
       />
 
       {/* サマリー */}
-      <div className="rounded-xl border border-[#ece6d8] bg-[#faf6ec] px-5 py-3 text-sm">
-        <span className="text-gray-600">最も強い傾向：</span>
-        <span className="ml-1 text-lg font-bold" style={{ color: ELEMENT_STYLE[strongest].color }}>
-          {ELEMENT_CORRESPONDENCE[strongest].organ}
-        </span>
-        <span className="ml-2 rounded bg-red-50 px-1.5 py-0.5 text-xs text-red-600">↗ 過剰</span>
-        <span className="mx-3 text-gray-300">｜</span>
-        <span className="text-gray-600">最も弱い傾向：</span>
-        <span className="ml-1 text-lg font-bold" style={{ color: ELEMENT_STYLE[weakest].color }}>
-          {ELEMENT_CORRESPONDENCE[weakest].organ}
-        </span>
-        <span className="ml-2 rounded bg-blue-50 px-1.5 py-0.5 text-xs text-blue-600">↘ 虚弱</span>
+      <div className="flex flex-col gap-2 rounded-xl border border-[#ece6d8] bg-[#faf6ec] px-5 py-3 text-sm">
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+          <span className="text-gray-600">最も強い傾向：</span>
+          <span className="text-lg font-bold" style={{ color: ELEMENT_STYLE[strongest].color }}>
+            {ELEMENT_CORRESPONDENCE[strongest].organ}
+          </span>
+          <span className="rounded bg-red-50 px-1.5 py-0.5 text-xs text-red-600">↗ 過剰</span>
+        </div>
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+          <span className="text-gray-600">最も弱い傾向：</span>
+          <span className="text-lg font-bold" style={{ color: ELEMENT_STYLE[weakest].color }}>
+            {ELEMENT_CORRESPONDENCE[weakest].organ}
+          </span>
+          <span className="rounded bg-blue-50 px-1.5 py-0.5 text-xs text-blue-600">↘ 虚弱</span>
+        </div>
       </div>
 
       <div className="grid gap-4 lg:grid-cols-3">

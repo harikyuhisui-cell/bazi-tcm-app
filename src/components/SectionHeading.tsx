@@ -15,8 +15,8 @@ export function SectionHeading({ numberKanji, title, subtitle }: Props) {
       >
         {numberKanji}
       </span>
-      <div>
-        <h2 className="text-2xl font-bold text-gray-800">{title}</h2>
+      <div className="min-w-0">
+        <h2 className="whitespace-nowrap text-xl font-bold text-gray-800 sm:text-2xl">{title}</h2>
         {subtitle && <p className="mt-1 text-sm text-gray-500">{subtitle}</p>}
       </div>
     </div>

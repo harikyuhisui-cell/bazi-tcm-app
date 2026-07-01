@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { calculateBazi } from '@/lib/bazi/calculator'
 import { analyzeWuxing } from '@/lib/wuxing/analyzer'
 import { buildDiagnosis } from '@/lib/tcm/matcher'
@@ -19,6 +19,12 @@ export default function Home() {
   const [result, setResult] = useState<DiagnosisResult | null>(null)
   const [profile, setProfile] = useState<{ name: string; gender: Gender } | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const resultRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!result || !profile) return
+    resultRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }, [result, profile])
 
   function handleSubmit(values: BirthInputValues) {
     try {
@@ -54,7 +60,7 @@ export default function Home() {
       </div>
 
       {result && profile && (
-        <div className="mt-10 flex flex-col gap-10">
+        <div ref={resultRef} className="mt-10 flex scroll-mt-6 flex-col gap-10">
           {profile.name && (
             <p className="text-lg font-bold text-gray-700">{profile.name} さんの鑑定結果</p>
           )}

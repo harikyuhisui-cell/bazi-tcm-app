@@ -14,6 +14,7 @@ import { PersonalityCard } from '@/components/PersonalityCard'
 import { SectionHeading, KANJI_NUMERALS } from '@/components/SectionHeading'
 import { ConstitutionCard } from '@/components/ConstitutionCard'
 import { Disclaimer } from '@/components/Disclaimer'
+import { TitleLeafDecoration } from '@/components/TitleLeafDecoration'
 
 export default function Home() {
   const [result, setResult] = useState<DiagnosisResult | null>(null)
@@ -45,12 +46,17 @@ export default function Home() {
 
   return (
     <main className="mx-auto max-w-4xl px-4 py-10">
-      <h1 className="text-center text-3xl font-bold tracking-wide text-[#4a332d]">
-        体質バランスチェック
-      </h1>
-      <p className="mx-auto mt-2 max-w-2xl text-center text-sm text-gray-600">
-        生年月日時から四柱推命の命式を算出し、東洋医学の観点から体質の傾向と養生のヒントをご提案します。
-      </p>
+      <section className="relative overflow-hidden rounded-[2rem] border border-[#eadfcd] bg-[#fffaf3]/80 px-5 py-10 shadow-sm sm:px-8 sm:py-12">
+        <TitleLeafDecoration />
+        <div className="relative z-10">
+          <h1 className="text-center text-3xl font-bold tracking-wide text-[#4a332d] sm:text-4xl">
+            体質バランスチェック
+          </h1>
+          <p className="mx-auto mt-3 max-w-2xl text-center text-sm leading-relaxed text-gray-600">
+            生年月日時から四柱推命の命式を算出し、東洋医学の観点から体質の傾向と養生のヒントをご提案します。
+          </p>
+        </div>
+      </section>
 
       <div className="mt-6">
         <BirthInputForm onSubmit={handleSubmit} />

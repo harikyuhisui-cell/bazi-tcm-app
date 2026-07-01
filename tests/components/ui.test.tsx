@@ -8,6 +8,8 @@ describe('Disclaimer', () => {
   test('免責文言を表示する', () => {
     render(<Disclaimer />)
     expect(screen.getByRole('note')).toHaveTextContent('医療診断ではありません')
+    expect(screen.getByRole('note')).toHaveTextContent('入力した生年月日')
+    expect(screen.getByRole('note')).toHaveTextContent('保存されず')
   })
 })
 

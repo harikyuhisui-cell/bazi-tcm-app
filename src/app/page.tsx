@@ -45,8 +45,10 @@ export default function Home() {
 
   return (
     <main className="mx-auto max-w-4xl px-4 py-10">
-      <h1 className="text-2xl font-bold">陰陽五行体質チェック</h1>
-      <p className="mt-2 text-sm text-gray-600">
+      <h1 className="text-center text-3xl font-bold tracking-wide text-[#4a332d]">
+        体質バランスチェック
+      </h1>
+      <p className="mx-auto mt-2 max-w-2xl text-center text-sm text-gray-600">
         生年月日時から四柱推命の命式を算出し、東洋医学の観点から体質の傾向と養生のヒントをご提案します。
       </p>
 

@@ -65,10 +65,10 @@ export function WuxingRadarChart({ scores }: Props) {
             <Radar
               name="五行スコア"
               dataKey="score"
-              stroke="#c9a227"
+              stroke="#eaa8b8"
               strokeWidth={2}
-              fill="#d8b65a"
-              fillOpacity={0.35}
+              fill="#f6cbd5"
+              fillOpacity={0.45}
             />
           </RadarChart>
         </ResponsiveContainer>

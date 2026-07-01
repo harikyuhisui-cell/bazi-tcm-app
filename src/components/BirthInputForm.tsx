@@ -40,7 +40,7 @@ function Select({
   value,
   onChange,
   children,
-  width = 'w-24',
+  width = 'w-20 sm:w-24',
 }: {
   label: string
   value: string
@@ -54,7 +54,7 @@ function Select({
         aria-label={label}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className={`${width} rounded-md border border-gray-300 bg-white px-2 py-2 text-center`}
+        className={`${width} rounded-md border border-gray-300 bg-white px-1.5 py-2 text-center sm:px-2`}
       >
         {children}
       </select>
@@ -115,7 +115,7 @@ export function BirthInputForm({ onSubmit }: Props) {
       {/* 生年月日 */}
       <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-3">
         <span className="w-24 shrink-0 font-medium">生年月日</span>
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-nowrap items-center gap-1.5 sm:gap-2">
           <Select label="年" value={String(year)} onChange={(v) => setYear(Number(v))}>
             {YEARS.map((y) => (
               <option key={y} value={y}>
@@ -123,14 +123,24 @@ export function BirthInputForm({ onSubmit }: Props) {
               </option>
             ))}
           </Select>
-          <Select label="月" value={String(month)} onChange={(v) => setMonth(Number(v))} width="w-16">
+          <Select
+            label="月"
+            value={String(month)}
+            onChange={(v) => setMonth(Number(v))}
+            width="w-14 sm:w-16"
+          >
             {MONTHS.map((m) => (
               <option key={m} value={m}>
                 {m}
               </option>
             ))}
           </Select>
-          <Select label="日" value={String(safeDay)} onChange={(v) => setDay(Number(v))} width="w-16">
+          <Select
+            label="日"
+            value={String(safeDay)}
+            onChange={(v) => setDay(Number(v))}
+            width="w-14 sm:w-16"
+          >
             {days.map((d) => (
               <option key={d} value={d}>
                 {d}
@@ -207,9 +217,9 @@ export function BirthInputForm({ onSubmit }: Props) {
 
       <button
         type="submit"
-        className="rounded-md bg-emerald-700 px-4 py-3 text-lg font-medium text-white hover:bg-emerald-800"
+        className="rounded-md bg-[#efb7c4] px-4 py-3 text-lg font-medium text-white shadow-sm hover:bg-[#eaa8b8]"
       >
-        体質傾向をみる
+        体質チェックする
       </button>
     </form>
   )

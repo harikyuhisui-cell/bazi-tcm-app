@@ -19,7 +19,7 @@ describe('BirthInputForm', () => {
     fireEvent.change(screen.getByLabelText('年'), { target: { value: '1990' } })
     fireEvent.change(screen.getByLabelText('月'), { target: { value: '5' } })
     fireEvent.change(screen.getByLabelText('日'), { target: { value: '15' } })
-    fireEvent.click(screen.getByRole('button', { name: '体質傾向をみる' }))
+    fireEvent.click(screen.getByRole('button', { name: '体質チェックする' }))
 
     expect(onSubmit).toHaveBeenCalledWith({
       name: '',
@@ -40,7 +40,7 @@ describe('BirthInputForm', () => {
     fireEvent.change(screen.getByLabelText('時'), { target: { value: '9' } })
     fireEvent.change(screen.getByLabelText('分'), { target: { value: '5' } })
     fireEvent.click(screen.getByLabelText('男性'))
-    fireEvent.click(screen.getByRole('button', { name: '体質傾向をみる' }))
+    fireEvent.click(screen.getByRole('button', { name: '体質チェックする' }))
 
     expect(onSubmit).toHaveBeenCalledWith(
       expect.objectContaining({ birthTime: '09:05', timeUnknown: false, gender: 'male' })

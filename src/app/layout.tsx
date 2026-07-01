@@ -14,7 +14,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "陰陽五行体質チェック",
+  title: "体質バランスチェック",
   description: "四柱推命と東洋医学の考え方に基づく体質傾向の参考情報を提供します。",
 };
 

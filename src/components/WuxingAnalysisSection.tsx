@@ -26,7 +26,7 @@ export function WuxingAnalysisSection({ analysis, sectionIndex = 1 }: Props) {
       <div className="grid gap-5 lg:grid-cols-2">
         <div className={cardClass}>
           <h3 className="mb-2 text-center text-base font-bold text-gray-700">
-            五行バランスレーダー
+            五行バランスチャート
           </h3>
           <WuxingRadarChart scores={analysis.scores} />
         </div>

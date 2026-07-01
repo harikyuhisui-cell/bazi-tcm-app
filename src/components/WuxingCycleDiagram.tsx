@@ -71,7 +71,7 @@ function trim(from: Element, to: Element, gap = CIRCLE_R + 4) {
 /** 五行の相生・相剋関係図 */
 export function WuxingCycleDiagram() {
   return (
-    <div className="rounded-2xl border border-[#ece6d8] bg-white p-5 shadow-sm">
+    <div className="rounded-2xl border border-[#ece6d8] bg-white p-3 shadow-sm sm:p-5">
       <h3 className="mb-1 text-base font-bold text-gray-700">五行の相生・相剋</h3>
       <p className="mb-3 text-sm text-gray-500">
         五行は互いに「生み出す（相生）」「抑える（相剋）」関係でつながっています

@@ -22,7 +22,7 @@ const STATUS_LABEL: Record<OrganStatus, string> = {
 }
 
 const STATUS_BADGE: Record<OrganStatus, string> = {
-  excess: 'bg-red-50 text-red-600',
+  excess: 'bg-[#fde8ee] text-[#c46d82]',
   normal: 'bg-emerald-50 text-emerald-700',
   deficient: 'bg-blue-50 text-blue-600',
 }
@@ -34,13 +34,13 @@ const STATUS_ARROW: Record<OrganStatus, string> = {
 }
 
 const STATUS_CARD: Record<OrganStatus, string> = {
-  excess: 'border-[#f0d8c8] bg-[#fdf4ee]',
+  excess: 'border-[#efb7c4] bg-[#fff3f6]',
   normal: 'border-[#ece6d8] bg-white',
   deficient: 'border-[#ece6d8] bg-white',
 }
 
 const STATUS_NOTE: Record<OrganStatus, string> = {
-  excess: 'bg-orange-50 text-orange-800',
+  excess: 'bg-[#fde8ee] text-[#7a3f4d]',
   normal: 'bg-emerald-50 text-emerald-800',
   deficient: 'bg-blue-50 text-blue-800',
 }

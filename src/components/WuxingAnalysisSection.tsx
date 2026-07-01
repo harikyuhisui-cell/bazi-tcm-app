@@ -36,7 +36,7 @@ export function WuxingAnalysisSection({ analysis, sectionIndex = 1 }: Props) {
         </div>
       </div>
 
-      <div className="mx-auto w-full max-w-lg">
+      <div className="mx-auto w-full max-w-2xl">
         <WuxingCycleDiagram />
       </div>
 

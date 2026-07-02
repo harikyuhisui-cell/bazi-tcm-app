@@ -48,12 +48,18 @@ export function DayMasterStrengthBar({ analysis }: Props) {
         />
       </div>
 
-      <div className="mt-2 grid grid-cols-5 text-[11px] text-gray-500 sm:text-xs">
-        <span className="text-left">最身弱</span>
-        <span className="text-center">身弱</span>
-        <span className="text-center">中和</span>
-        <span className="text-center">身強</span>
-        <span className="text-right">最身強</span>
+      <div className="relative mt-2 h-4 text-[10px] text-gray-500 sm:text-xs">
+        <span className="absolute left-0">最身弱</span>
+        <span className="absolute -translate-x-1/2" style={{ left: '22%' }}>
+          身弱
+        </span>
+        <span className="absolute -translate-x-1/2" style={{ left: '43%' }}>
+          中和
+        </span>
+        <span className="absolute -translate-x-1/2" style={{ left: '64%' }}>
+          身強
+        </span>
+        <span className="absolute right-0">最身強</span>
       </div>
 
       <p className="mt-3 text-center text-sm text-gray-600">{caption}</p>

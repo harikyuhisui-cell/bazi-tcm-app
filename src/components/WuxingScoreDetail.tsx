@@ -26,8 +26,8 @@ export function WuxingScoreDetail({ analysis }: Props) {
           const barWidth = `${(scores[el] / max) * 100}%`
           const tag = tagOf(el)
           return (
-            <li key={el} className="flex items-center gap-3">
-              <span className="flex w-10 shrink-0 items-baseline gap-1">
+            <li key={el} className="flex items-center gap-2 sm:gap-3">
+              <span className="flex w-8 shrink-0 items-baseline gap-0.5 sm:w-10 sm:gap-1">
                 <span className="text-xl font-bold" style={{ color: style.color }}>
                   {el}
                 </span>
@@ -39,18 +39,20 @@ export function WuxingScoreDetail({ analysis }: Props) {
                   style={{ width: barWidth, backgroundColor: style.color }}
                 />
               </span>
-              <span className="w-8 shrink-0 text-right text-sm font-medium text-gray-700">
+              <span className="w-6 shrink-0 text-right text-xs font-medium text-gray-700 sm:w-8 sm:text-sm">
                 {scores[el]}
               </span>
-              <span className="w-10 shrink-0 text-right text-sm text-gray-500">{ratio}%</span>
-              <span className="w-12 shrink-0 text-center">
+              <span className="w-8 shrink-0 text-right text-xs text-gray-500 sm:w-10 sm:text-sm">
+                {ratio}%
+              </span>
+              <span className="w-10 shrink-0 text-center sm:w-12">
                 {tag === 'favorable' && (
-                  <span className="rounded bg-emerald-100 px-1.5 py-0.5 text-xs text-emerald-700">
+                  <span className="rounded bg-emerald-100 px-1 py-0.5 text-[10px] text-emerald-700 sm:px-1.5 sm:text-xs">
                     喜神
                   </span>
                 )}
                 {tag === 'unfavorable' && (
-                  <span className="rounded bg-red-100 px-1.5 py-0.5 text-xs text-red-700">
+                  <span className="rounded bg-red-100 px-1 py-0.5 text-[10px] text-red-700 sm:px-1.5 sm:text-xs">
                     忌神
                   </span>
                 )}
@@ -59,13 +61,13 @@ export function WuxingScoreDetail({ analysis }: Props) {
           )
         })}
       </ul>
-      <div className="mt-4 flex justify-end gap-4 text-xs text-gray-500">
-        <span>
-          <span className="mr-1 rounded bg-emerald-100 px-1.5 py-0.5 text-emerald-700">喜神</span>
+      <div className="mt-4 flex flex-nowrap items-center justify-end gap-2 whitespace-nowrap text-[10px] text-gray-500 sm:gap-4 sm:text-xs">
+        <span className="shrink-0">
+          <span className="mr-1 rounded bg-emerald-100 px-1 py-0.5 text-emerald-700 sm:px-1.5">喜神</span>
           養うべき五行
         </span>
-        <span>
-          <span className="mr-1 rounded bg-red-100 px-1.5 py-0.5 text-red-700">忌神</span>
+        <span className="shrink-0">
+          <span className="mr-1 rounded bg-red-100 px-1 py-0.5 text-red-700 sm:px-1.5">忌神</span>
           注意すべき五行
         </span>
       </div>
